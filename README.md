@@ -12,3 +12,10 @@ variable keyword arguments
 
 ### args_kwargs_with_functions.py [code](./args_kwargs_with_functions.py)
 how to send variable positional arguments and variable keyword arguments to another function 
+
+## dict
+
+### dict.py [code](./dict.py)
+dict methods
+get -> get value from dict according to key
+pop -> get value from dict according to key, but key and value are removed
