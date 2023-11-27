@@ -19,3 +19,11 @@ how to send variable positional arguments and variable keyword arguments to anot
 dict methods
 get -> get value from dict according to key
 pop -> get value from dict according to key, but key and value are removed
+
+## same_arguments_to_function.py [code](./same_arguments_to_function.py)
+Using one dict for default arguments to function.  
+Speed comparison:
+- direct call is fastest
+- warper is 15% slower than direct call
+- `functools.partial` slowest
+- dict 10% faster than `functools.partial`
