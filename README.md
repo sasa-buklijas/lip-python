@@ -27,3 +27,13 @@ Speed comparison:
 - warper is 15% slower than direct call
 - `functools.partial` slowest
 - dict 10% faster than `functools.partial`
+
+## signals [code](./signals.py)
+Example of catching and sending standard UNIX signals to Python program.  
+More details at [docs](https://docs.python.org/3/library/signal.html).  
+Not available on Windows.  
+`CTRL+C` is `SIGINT`.  
+`CTRL+Z` is `SIGTSTP`, stop signal generated from keyboard.  
+`SIGUSR1` and `SIGUSR2` are signals for user/developer/programer to use in application.  
+Use `man 7 signal` for all available signals with names and numbers.  
+Use `kill -<signal_name|signal_number> <PID>` for sending signal to process.  
