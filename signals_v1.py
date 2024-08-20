@@ -1,6 +1,9 @@
 import os
 import signal
 
+# handling user signals
+# just prints on screen when signals are received
+
 def SIGUSR1_handler(signum, frame):
     print('SIGUSR1_handler')
     print(f'{type(signum)=} {type(frame)=}')

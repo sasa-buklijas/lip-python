@@ -36,4 +36,13 @@ Not available on Windows.
 `CTRL+Z` is `SIGTSTP`, stop signal generated from keyboard.  
 `SIGUSR1` and `SIGUSR2` are signals for user/developer/programer to use in application.  
 Use `man 7 signal` for all available signals with names and numbers.  
-Use `kill -<signal_name|signal_number> <PID>` for sending signal to process.  
+Use `kill -<signal_name|signal_number> <PID>` for sending signal to process. 
+
+## asyncio
+
+If you plan to use asyncio, than you must not use old booking calls (eg. time.sleep()), but must use new asynchronous coroutines (eg. asyncio.sleep()).
+
+### using_time_sleep [code](./asyncio/001_still_blockin_incorect_use.py)
+
+### using_asyncio_sleep [code](./asyncio/002_fix_for_001.py)
+
