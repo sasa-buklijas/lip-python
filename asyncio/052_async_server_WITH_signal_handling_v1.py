@@ -39,16 +39,22 @@ async def main(host='127.0.0.1', port=7000):
 def signal_handler(loop):
     """ Signal handler for stopping the event loop gracefully. """
     for task in asyncio.all_tasks(loop):
-        print(f'START send task.cancel() to {task=}')
+        print(f'START send task.cancel() to\n{task=}')
         task.cancel()
-        print(f'END   send task.cancel() to {task=}')
+        print(f'END   send task.cancel() to\n{task=}')
     loop.stop()
 
 
 if __name__ == "__main__":
     #asyncio.run(main())
 
-    loop = asyncio.get_event_loop()
+    #loop = asyncio.get_event_loop()
+
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:  # No running loop
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
 
     # Register signal handlers
     loop.add_signal_handler(signal.SIGINT, signal_handler, loop)
