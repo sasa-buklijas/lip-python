@@ -38,11 +38,52 @@ async def main(host='127.0.0.1', port=7000):
 
 def signal_handler(loop):
     """ Signal handler for stopping the event loop gracefully. """
+    # for task in asyncio.all_tasks(loop):
+    #     print(f'START send task.cancel() to\n{task=}')
+    #     task.cancel()
+    #     print(f'END   send task.cancel() to\n{task=}')
+    # loop.stop()
+
+    #print("Signal received, stopping loop...")
+    #loop.stop()  # Stop the event loop
+
+    """Shutdown the server and clean up."""
+    print("Cancelling tasks...")
     for task in asyncio.all_tasks(loop):
         print(f'START send task.cancel() to\n{task=}')
         task.cancel()
         print(f'END   send task.cancel() to\n{task=}')
-    loop.stop()
+
+    print("Waiting for tasks to finish...")
+    await asyncio.gather(*asyncio.all_tasks(loop), return_exceptions=True)
+
+    print("Stopping the server...")
+    server_task.cancel()
+    try:
+        await server_task
+    except asyncio.CancelledError:
+        pass
+    print("Server stopped.")
+
+
+async def shutdown(loop, server_task):
+    """Shutdown the server and clean up."""
+    print("Cancelling tasks...")
+    for task in asyncio.all_tasks(loop):
+        print(f'START send task.cancel() to\n{task=}')
+        task.cancel()
+        print(f'END   send task.cancel() to\n{task=}')
+
+    print("Waiting for tasks to finish...")
+    await asyncio.gather(*asyncio.all_tasks(loop), return_exceptions=True)
+
+    print("Stopping the server...")
+    server_task.cancel()
+    try:
+        await server_task
+    except asyncio.CancelledError:
+        pass
+    print("Server stopped.")
 
 
 if __name__ == "__main__":
@@ -56,12 +97,16 @@ if __name__ == "__main__":
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
 
+    # Create the main server task
+    server_task = loop.create_task(main())
+
     # Register signal handlers
     loop.add_signal_handler(signal.SIGINT, signal_handler, loop)
     loop.add_signal_handler(signal.SIGTERM, signal_handler, loop)
 
     try:
         loop.run_until_complete(main())
+        #loop.run_until_complete(shutdown(loop, server_task))
     except asyncio.CancelledError:
         pass
     finally:
