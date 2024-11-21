@@ -11,6 +11,7 @@ def main():
         s.sendall(b"Hello, world")
         time.sleep(5)
         data = s.recv(1024)
+        #s.close()   # even with close, still TIME-WAIT persist for some time
 
     print(f"Received {data!r}")
 
