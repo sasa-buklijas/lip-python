@@ -9,6 +9,15 @@ def generator_function_with_return():
     yield 2
     return 5
 
+def generator_function_with_return_and_finally(i: int):
+    if i == 1:
+        return 5
+    try:
+        yield 1
+        yield 2
+    finally:
+        print('Finally generator_function_with_return_and_finally')
+
 
 def main():
     this_is_generator = generator_function_no_return()
@@ -42,7 +51,7 @@ def main():
             break
 
     # from chatGTP, but hallucination, because result is None
-    print('fro chatGTP, but hallucination ')
+    print('from chatGTP, but hallucination ')
     gen = generator_function_with_return()
     for value in gen:
         print("Yielded:", value)
@@ -50,6 +59,15 @@ def main():
         next(gen)
     except StopIteration as e:
         print("Returned:", e.value)  # This will be 5
+
+    print('generator_function_with_return_and_finally(1)')
+    for i in generator_function_with_return_and_finally(1):
+        print(i)
+
+    print('generator_function_with_return_and_finally(0)')
+    for i in generator_function_with_return_and_finally(0):
+        print(i)
+
 
 if __name__ == "__main__":
     main()
